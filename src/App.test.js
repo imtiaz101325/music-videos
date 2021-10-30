@@ -1,8 +1,46 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
-  render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+beforeEach(() => {
+  fetch.resetMocks();
 });
+
+test('shows loading indicator', async () => {
+  render(<App />)
+
+  const loadingIndicator = screen.getByText(/loading/i)
+  expect(loadingIndicator).toBeInTheDocument()
+  
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i))
+})
+
+test('shows error indicator', async () => {
+  fetch.mockReject(() => Promise.reject("API is down"))
+
+  render(<App />);
+  
+  await waitFor(() => screen.getByText(/error/i))
+});
+
+test('renders images', async () => {
+  const data = {
+    "genres": [
+      { "id": 14, "name": "Rap/Hip-Hop" }
+    ],
+    "videos": [
+      {
+        "id": 501437,
+        "artist": "Pants Velour",
+        "title": "All In",
+        "release_year": 2014,
+        "genre_id": 14,
+        "image_url": "https://raw.githubusercontent.com/XiteTV/frontend-coding-exercise/679a82b1e7110c16e14412f1debaa118c10078a9/images/501437/images/app/w522_h292.jpg"
+      }
+    ]
+  }
+  fetch.mockResponseOnce(JSON.stringify(data))
+
+  render(<App />)
+
+  await waitFor(() => screen.getByAltText(/all in/i))
+})

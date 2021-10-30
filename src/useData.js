@@ -7,7 +7,7 @@ export default function useData() {
 
   useEffect(() => {
     async function fetchData() {
-      const url = 'https://raw.githubusercontent.com/XiteTV/frontend-coding-exercise/main/data/dataset.jsonn'
+      const url = 'https://raw.githubusercontent.com/XiteTV/frontend-coding-exercise/main/data/dataset.json'
       try {
         const response = await fetch(url)
         setData(await response.json())
