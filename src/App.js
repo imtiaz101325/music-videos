@@ -1,3 +1,4 @@
+import { DisplayArea } from './DisplayArea';
 import useData from './useData'
 
 export default function App() {
@@ -5,11 +6,10 @@ export default function App() {
 
   return (
     <div>
+      <h1>Music Videos</h1>
       {loading && 'loading...'}
       {error && 'error'}
-      {data?.videos?.map(
-        ({ image_url, title, id }) => <img src={image_url} alt={title} key={id} />
-      )}
+      <DisplayArea items={data?.videos} />
     </div>
   );
 }
