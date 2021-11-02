@@ -19,10 +19,15 @@ export default function FilterYear({ setFilters, yearList }) {
   }
 
   return (
-    <Grid item md={6}>
+    <Grid item xs={12} sm={6}>
       <FormControl fullWidth>
         <InputLabel>Year</InputLabel>
-        <Select value={year} defaultValue="" onChange={handleSelect}>
+        <Select
+          label="Year"
+          value={year}
+          defaultValue=""
+          onChange={handleSelect}
+        >
           {yearList?.map((year) => (
             <MenuItem value={year} key={year}>
               {year}

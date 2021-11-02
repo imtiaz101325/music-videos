@@ -28,7 +28,7 @@ export default function FilterGenre({ setFilters, genreList }) {
   }
 
   return (
-    <Grid item md={6}>
+    <Grid item xs={12} sm={6}>
       <FormControl fullWidth>
         <InputLabel id="demo-multiple-chip-label">Genre</InputLabel>
         <Select

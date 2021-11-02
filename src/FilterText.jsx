@@ -11,7 +11,7 @@ export default function FilterText({ setFilters }) {
   }
 
   return (
-    <Grid item md={12}>
+    <Grid item xs={12}>
       <TextField
         fullWidth
         label="Search"
