@@ -9,7 +9,7 @@ import useData from "./useData";
 import theme from "./theme";
 import Filters from "./Filters";
 import { Box } from "@mui/system";
-import { Error, Warning } from "@mui/icons-material";
+import { Warning } from "@mui/icons-material";
 
 const fullPageStyles = {
   height: "100vh",
@@ -66,7 +66,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box sx={fullPageStyles}>
-          <CircularProgress size={100} />
+          <CircularProgress size={100} disableShrink/>
         </Box>
       </ThemeProvider>
     );
