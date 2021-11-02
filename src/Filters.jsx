@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import { object, array, func, bool } from "prop-types";
 import {
   Chip,
@@ -14,44 +14,19 @@ import {
 import { Box } from "@mui/system";
 import { Search } from "@mui/icons-material";
 
-export function Filters({
-  data,
-  results,
-  setResults,
-  hasFilters,
-  setHasFilters,
+import FilterYear from "./FilterYear";
+
+export default function Filters({
+  setFilters,
+  yearList,
+  genreList
 }) {
-  const targetData = hasFilters ? results : data?.videos;
-
   const [genre, setGenre] = useState([]);
-  const [year, setYear] = useState();
-
-  useEffect(() => {
-    if (year) {
-      setResults(
-        targetData.filter(({ release_year }) => release_year === year)
-      );
-    }
-  }, [targetData, year, setResults]);
-
-  const yearsList = useMemo(
-    function getYears() {
-      const years = data?.videos?.map(({ release_year }) => release_year);
-      const unique = new Set(years);
-
-      return Array.from(unique).sort();
-    },
-    [data]
-  );
 
   function handleGenreSelect(event) {
-    setGenre(event?.target?.value)
+    setGenre(event?.target?.value);
   }
-
-  function handleYearSelect(event) {
-    setYear(event?.target?.value);
-  }
-
+  
   return (
     <Grid container spacing={2}>
       <Grid item md={12}>
@@ -65,18 +40,10 @@ export function Filters({
           }
         />
       </Grid>
-      <Grid item md={6}>
-        <FormControl fullWidth>
-          <InputLabel>Year</InputLabel>
-          <Select value={year} onChange={handleYearSelect}>
-            {yearsList?.map((year) => (
-              <MenuItem value={year} key={year}>
-                {year}
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-      </Grid>
+      <FilterYear
+        setFilters={setFilters}
+        yearList={yearList}
+      />
       <Grid item md={6}>
         <FormControl fullWidth>
           <InputLabel id="demo-multiple-chip-label">Genre</InputLabel>
@@ -93,7 +60,7 @@ export function Filters({
               </Box>
             )}
           >
-            {data?.genres?.map(({ name, id }) => (
+            {genreList?.map(({ name, id }) => (
               <MenuItem key={id} value={{ name, id }}>
                 {name}
               </MenuItem>
