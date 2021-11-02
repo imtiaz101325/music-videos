@@ -1,6 +1,7 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
 import { CircularProgress, CssBaseline, Typography } from "@mui/material";
+import Fuse from "fuse.js";
 
 import { DisplayArea } from "./DisplayArea";
 
@@ -28,11 +29,24 @@ export default function App() {
 
   const { data, loading, error } = useData();
 
+  const searchRef = useRef();
+
+  useEffect(() => {
+    if (data) {
+      searchRef.current = new Fuse(data.videos, {
+        keys: ["artist", "title"],
+        threshold: 0.1,
+      });
+    }
+  }, [data]);
+
   const results = useMemo(() => {
     if (data) {
       let results = data?.videos;
-      if (filters.search) {
-        //TODO:
+      if (filters.search && searchRef.current) {
+        results = searchRef.current
+          .search(filters.search)
+          .map(({ item }) => item);
       }
 
       if (filters.year) {
@@ -49,7 +63,7 @@ export default function App() {
 
       return results;
     }
-  }, [data, filters]);
+  }, [data, searchRef, filters]);
 
   const yearList = useMemo(
     function getYears() {
@@ -66,7 +80,7 @@ export default function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box sx={fullPageStyles}>
-          <CircularProgress size={100} disableShrink/>
+          <CircularProgress size={100} disableShrink />
         </Box>
       </ThemeProvider>
     );
@@ -99,7 +113,7 @@ export default function App() {
           yearList={yearList}
           genreList={data?.genres}
         />
-        <DisplayArea items={results} />
+        <DisplayArea items={results} searchText={filters.search} />
       </div>
     </ThemeProvider>
   );

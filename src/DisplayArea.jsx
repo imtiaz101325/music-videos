@@ -1,3 +1,4 @@
+import { array, string } from "prop-types";
 import {
   Card,
   CardContent,
@@ -7,9 +8,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
-import PropTypes from "prop-types";
 
-export function DisplayArea({ items }) {
+export function DisplayArea({ items, searchText }) {
+  function processText(text) {
+    if (searchText) {
+      return text
+        .split(new RegExp(searchText, "ig"))
+        .join(`<span>${searchText}</span>`);
+    }
+
+    return text;
+  }
+
   return (
     <Grid container spacing={2} p={2}>
       {items?.map(({ image_url, title, id, artist, genre, release_year }) => (
@@ -23,10 +33,22 @@ export function DisplayArea({ items }) {
               alt={title}
             />
             <CardContent>
-              <Typography variant="h6">{title}</Typography>
-              <Typography variant="subtitle1">{artist}</Typography>
+              <Typography
+                variant="h6"
+                dangerouslySetInnerHTML={{
+                  __html: processText(title),
+                }}
+                sx={{ "& span": { background: "red" } }}
+              />
+              <Typography
+                variant="subtitle1"
+                dangerouslySetInnerHTML={{
+                  __html: processText(artist),
+                }}
+                sx={{ "& span": { background: "red" } }}
+              />
             </CardContent>
-            <Box sx={{ padding: "8px", display: 'flex', gap: 0.5 }}>
+            <Box sx={{ padding: "8px", display: "flex", gap: 0.5 }}>
               {genre && <Chip label={genre} />}
               <Chip label={release_year} />
             </Box>
@@ -38,5 +60,6 @@ export function DisplayArea({ items }) {
 }
 
 DisplayArea.propTyes = {
-  items: PropTypes.array.isRequired,
+  items: array.isRequired,
+  searchText: string,
 };
