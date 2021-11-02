@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { object, array, func, bool } from "prop-types";
+import { array, func } from "prop-types";
 import {
   Chip,
   FormControl,
@@ -33,11 +33,6 @@ export default function Filters({
         <TextField
           fullWidth
           label="Search"
-          endAdornment={
-            <InputAdornment position="end">
-              <Search />
-            </InputAdornment>
-          }
         />
       </Grid>
       <FilterYear
@@ -50,6 +45,7 @@ export default function Filters({
           <Select
             multiple
             value={genre}
+            defaultValue=""
             onChange={handleGenreSelect}
             input={<OutlinedInput label="Chip" />}
             renderValue={(selected) => (
@@ -73,9 +69,7 @@ export default function Filters({
 }
 
 Filters.propTypes = {
-  data: object,
-  results: array.isRequired,
-  setResults: func.isRequired,
-  hasFilters: bool.isRequired,
-  setHasFilters: func.isRequired,
+  setFilters: func.isRequired,
+  yearList: array,
+  genreList: array,
 };

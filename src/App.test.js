@@ -9,10 +9,10 @@ beforeEach(() => {
 test('shows loading indicator', async () => {
   render(<App />)
 
-  const loadingIndicator = screen.getByText(/loading/i)
+  const loadingIndicator = screen.getByRole(/progressbar/i)
   expect(loadingIndicator).toBeInTheDocument()
   
-  await waitForElementToBeRemoved(() => screen.getByText(/loading/i))
+  await waitForElementToBeRemoved(() => screen.getByRole(/progressbar/i))
 })
 
 test('shows error indicator', async () => {
@@ -20,7 +20,7 @@ test('shows error indicator', async () => {
 
   render(<App />);
   
-  await waitFor(() => screen.getByText(/error/i))
+  await waitFor(() => screen.getByText(/Something went wrong/i))
 });
 
 test('renders images', async () => {

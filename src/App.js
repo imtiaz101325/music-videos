@@ -1,6 +1,6 @@
-import {  useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ThemeProvider } from "@emotion/react";
-import { CssBaseline, Typography } from "@mui/material";
+import { CircularProgress, CssBaseline, Typography } from "@mui/material";
 
 import { DisplayArea } from "./DisplayArea";
 
@@ -8,34 +8,48 @@ import useData from "./useData";
 
 import theme from "./theme";
 import Filters from "./Filters";
+import { Box } from "@mui/system";
+import { Error, Warning } from "@mui/icons-material";
+
+const fullPageStyles = {
+  height: "100vh",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+};
 
 export default function App() {
   const [filters, setFilters] = useState({
-    search: '',
+    search: "",
     year: null,
-    genre: []
+    genre: [],
   });
 
   const { data, loading, error } = useData();
 
   const results = useMemo(() => {
     if (data) {
-      let results = data?.videos
+      let results = data?.videos;
       if (filters.search) {
         //TODO:
       }
 
       if (filters.year) {
-        results = results.filter(({ release_year }) => filters.year === release_year)
+        results = results.filter(
+          ({ release_year }) => filters.year === release_year
+        );
       }
 
       if (filters.genre.length) {
-        results = results.filter(({ genre_id }) => filters.genre.includes(genre_id))
+        results = results.filter(({ genre_id }) =>
+          filters.genre.includes(genre_id)
+        );
       }
 
-      return results
+      return results;
     }
-  }, [data, filters])
+  }, [data, filters]);
 
   const yearList = useMemo(
     function getYears() {
@@ -47,6 +61,32 @@ export default function App() {
     [data]
   );
 
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box sx={fullPageStyles}>
+          <CircularProgress size={100} />
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
+  if (error) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box sx={fullPageStyles}>
+          <Warning color="error" sx={{ fontSize: "128px" }} />
+          <Typography variant="h1" textAlign="center">
+            Oh, no!
+          </Typography>
+          <Typography>Something went wrong!</Typography>
+        </Box>
+      </ThemeProvider>
+    );
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -54,8 +94,6 @@ export default function App() {
         <Typography variant="h1" textAlign="center">
           Music Videos
         </Typography>
-        {loading && "loading..."}
-        {error && "error"}
         <Filters
           setFilters={setFilters}
           yearList={yearList}

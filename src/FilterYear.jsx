@@ -2,30 +2,27 @@ import { useEffect, useState } from "react";
 import { func, array } from "prop-types";
 import { FormControl, Grid, InputLabel, MenuItem, Select } from "@mui/material";
 
-export default function FilterYear({
-  setFilters,
-  yearList
-}) {
+export default function FilterYear({ setFilters, yearList }) {
   const [year, setYear] = useState();
 
   useEffect(() => {
     if (year) {
-      setFilters(filters => ({
+      setFilters((filters) => ({
         ...filters,
-        year
-      }))
+        year,
+      }));
     }
-  }, [year, setFilters])
+  }, [year, setFilters]);
 
   function handleSelect(event) {
-    setYear(event?.target?.value)
+    setYear(event?.target?.value);
   }
 
   return (
     <Grid item md={6}>
       <FormControl fullWidth>
         <InputLabel>Year</InputLabel>
-        <Select value={year} onChange={handleSelect}>
+        <Select value={year} defaultValue="" onChange={handleSelect}>
           {yearList?.map((year) => (
             <MenuItem value={year} key={year}>
               {year}
@@ -39,5 +36,5 @@ export default function FilterYear({
 
 FilterYear.propTypes = {
   setFilters: func.isRequired,
-  yearList: array
+  yearList: array,
 };
