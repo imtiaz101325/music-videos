@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Box } from "@mui/system";
+import { Warning } from "@mui/icons-material";
 
 export function DisplayArea({ items, searchText }) {
   function processText(text) {
@@ -18,6 +19,26 @@ export function DisplayArea({ items, searchText }) {
     }
 
     return text;
+  }
+
+  if (!items?.length) {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          alignItems: "center",
+
+        }}
+      >
+        <Warning color="warning" sx={{ fontSize: "128px" }} />
+        <Typography>
+          No results found!
+        </Typography>
+        <Typography>Try changing the filters.</Typography>
+      </Box>
+    );
   }
 
   return (
