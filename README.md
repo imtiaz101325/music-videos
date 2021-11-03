@@ -10,4 +10,4 @@ To install dependencies go to the project folder and run `npm install`
 
 To start the local development server run `npm start`
 
-The app should look like [this](https://imtiaz101325.github.io/music-videos)
+The app should look like [this demo](https://imtiaz101325.github.io/music-videos)
