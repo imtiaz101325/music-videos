@@ -1,4 +1,4 @@
-# Music Video
+# Music Videos
 
 Simple app that loads music video data.
 
