@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.js": "/music-videos/static/js/main.76d6e550.chunk.js",
+    "main.js.map": "/music-videos/static/js/main.76d6e550.chunk.js.map",
+    "runtime-main.js": "/music-videos/static/js/runtime-main.34dc82a4.js",
+    "runtime-main.js.map": "/music-videos/static/js/runtime-main.34dc82a4.js.map",
+    "static/js/2.b4535aef.chunk.js": "/music-videos/static/js/2.b4535aef.chunk.js",
+    "static/js/2.b4535aef.chunk.js.map": "/music-videos/static/js/2.b4535aef.chunk.js.map",
+    "static/js/3.83676623.chunk.js": "/music-videos/static/js/3.83676623.chunk.js",
+    "static/js/3.83676623.chunk.js.map": "/music-videos/static/js/3.83676623.chunk.js.map",
+    "index.html": "/music-videos/index.html",
+    "static/js/2.b4535aef.chunk.js.LICENSE.txt": "/music-videos/static/js/2.b4535aef.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.34dc82a4.js",
+    "static/js/2.b4535aef.chunk.js",
+    "static/js/main.76d6e550.chunk.js"
+  ]
+}
